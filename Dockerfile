@@ -42,7 +42,7 @@ RUN cmake -B build \
   -D CMAKE_MODULE_PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt6LinguistTools \
   -D CMAKE_BUILD_TYPE=Release \
   -D GUI=OFF
-RUN cmake --build build
+RUN cmake --build build -j$(nproc)
 RUN cmake --install build
 WORKDIR /
 RUN rm -rf /qBittorrent
