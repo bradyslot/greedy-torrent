@@ -1,15 +1,15 @@
 ---
-version: "2.1"
+version: "3"
 services:
   qbittorrent:
     image: ghcr.io/bradyslot/greedy-torrent:latest
-    hostname: qbittorrent
-    container_name: qbittorrent
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-      - WEBUI_PORT=8080
+    build:
+      context: .
+      args:
+        - PUID=1000
+        - PGID=1000
+    hostname: greedy-torrent
+    container_name: greedy-torrent
     volumes:
       - ~/srv/qBittorrent:/config
       - ~/Storage/Torrents:/downloads
