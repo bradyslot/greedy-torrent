@@ -3,9 +3,8 @@ FROM debian:latest
 ENV HOME="/config" \
 XDG_CONFIG_HOME="/config" \
 XDG_DATA_HOME="/config"
-
-ARG PUID
-ARG PGID
+ENV PUID=1000
+ENV PGID=1000
 
 RUN apt-get update && apt-get install -y \
   git \
