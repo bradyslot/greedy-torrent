@@ -1,12 +1,6 @@
-FROM archlinux:base-devel
+FROM archlinux:base-devel as builder
 
-ENV HOME="/config" \
-XDG_CONFIG_HOME="/config" \
-XDG_DATA_HOME="/config"
-ENV PUID=1000
-ENV PGID=1000
-
-RUN pacman -Syu --noconfirm \
+RUN pacman -Sy --noconfirm \
   git \
   cmake \
   ninja \
@@ -29,14 +23,13 @@ RUN cmake \
   ..
 RUN ninja -j$(nproc)
 RUN ninja install
+
 WORKDIR /
-RUN rm -rf /libtorrent
 
 RUN git clone https://github.com/qbittorrent/qBittorrent.git
 RUN mkdir /qBittorrent/build
 WORKDIR /qBittorrent/build
 RUN cmake \
-  -D CMAKE_MODULE_PATH=/usr/lib/cmake/Qt5LinguistTools \
   -D CMAKE_BUILD_TYPE=Release \
   -D CMAKE_CXX_STANDARD=20 \
   -D GUI=OFF \
@@ -44,15 +37,24 @@ RUN cmake \
   ..
 RUN ninja -j$(nproc)
 RUN ninja install
-WORKDIR /
-RUN rm -rf /qBittorrent
+
+FROM alpine:latest as final
+
+ENV HOME="/config" \
+XDG_CONFIG_HOME="/config" \
+XDG_DATA_HOME="/config"
+ENV PUID=1000
+ENV PGID=1000
+
+COPY --from=builder /usr/lib/libtorrent-rasterbar.so.* /usr/lib/
+COPY --from=builder /usr/local/bin/qbittorrent-nox /usr/bin/
 
 EXPOSE 8080 6881 6881/udp
 VOLUME /config
 VOLUME /downloads
 
-RUN groupadd -g $PGID abc && \
-  useradd -u $PUID -g $PGID -d $HOME -s /bin/false abc
+RUN addgroup -g $PGID abc
+RUN adduser -u $PUID -G abc -h $HOME -s /bin/false -D abc
 
 USER abc
-CMD ["/bin/bash", "-c", "qbittorrent-nox --webui-port=8080"]
+CMD ["qbittorrent-nox", "--webui-port=8080"]
