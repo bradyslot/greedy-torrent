@@ -8,33 +8,17 @@ env:
   IMAGE_NAME: greedy-torrent
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: docker build
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
-      - name: upload docker artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: "${{ env.IMAGE_NAME }}"
-          path: ./Dockerfile
-  publish:
-    needs: build
+  build_and_publish:
     runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: read
     steps:
-      - name: download docker artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: "${{ env.IMAGE_NAME }}"
-          path: ./
+      - uses: actions/checkout@v3
+      - name: docker build
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
       - name: docker login
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-      - name: docker load
-        run: docker load -i "${{ env.IMAGE_NAME }}"
       - name: docker push
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
