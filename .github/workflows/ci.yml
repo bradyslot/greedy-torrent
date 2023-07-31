@@ -17,7 +17,7 @@ jobs:
       - name: upload docker artifact
         uses: actions/upload-artifact@v2
         with:
-          name: $IMAGE_NAME
+          name: "${{ env.IMAGE_NAME }}"
           path: ./Dockerfile
   publish:
     needs: build
@@ -29,7 +29,7 @@ jobs:
       - name: download docker artifact
         uses: actions/download-artifact@v2
         with:
-          name: $IMAGE_NAME
+          name: "${{ IMAGE_NAME }}"
       - name: docker login
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
       - name: docker push
