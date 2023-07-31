@@ -30,8 +30,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: "${{ env.IMAGE_NAME }}"
+          path: ./
       - name: docker login
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      - name: docker load
+        run: docker load -i "${{ env.IMAGE_NAME }}"
       - name: docker push
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
