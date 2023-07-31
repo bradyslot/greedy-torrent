@@ -38,7 +38,8 @@ volumes, then you'll probably want to build your own.
 Or, eventually I'll figure out how to do user mappings and permissions within
 docker compose.  
 
-```docker-compose.yml
+```yaml
+---
 version: "3"
 services:
   greedy-torrent:
