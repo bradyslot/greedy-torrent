@@ -32,6 +32,7 @@ WORKDIR /qBittorrent/build
 RUN cmake \
   -D CMAKE_BUILD_TYPE=Release \
   -D CMAKE_CXX_STANDARD=20 \
+  -D CMAKE_INSTALL_PREFIX=/usr \
   -D GUI=OFF \
   -G Ninja \
   ..
@@ -47,7 +48,7 @@ ENV PUID=1000
 ENV PGID=1000
 
 COPY --from=builder /usr/lib/libtorrent-rasterbar.so.* /usr/lib/
-COPY --from=builder /usr/local/bin/qbittorrent-nox /usr/bin/
+COPY --from=builder /usr/bin/qbittorrent-nox /usr/bin/
 
 EXPOSE 8080 6881 6881/udp
 VOLUME /config
