@@ -1,0 +1,16 @@
+---
+version: "3"
+services:
+  greedy-torrent:
+    build: .
+    image: ghcr.io/bradyslot/greedy-torrent:latest
+    hostname: greedy-torrent
+    container_name: greedy-torrent
+    volumes:
+      - ~/srv/qBittorrent:/config
+      - ~/Storage/Torrents:/downloads
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
