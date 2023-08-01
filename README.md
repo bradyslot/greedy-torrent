@@ -1,13 +1,16 @@
-# greedy-torrent
+# Greedy Torrent
 
 [![CI](https://github.com/bradyslot/greedy-torrent/actions/workflows/ci.yml/badge.svg)](https://github.com/bradyslot/greedy-torrent/actions)
 [![GHCR](https://img.shields.io/badge/latest-blue?style=flat&logo=docker&logoColor=ffffff&label=greedy-torrent&labelColor=555555&color=0366d6)](https://ghcr.io/bradyslot/greedy-torrent)
 
-## Take and don't give back
+Download your favourite Linux ISO's in peace knowing that the powers that be
+will not mistake you for one of those filthy pirates.  
+
+## Only Receive Never Send
 
 - Breaking the law is bad mmmk...
-- You shouldn't be sharing files with strangers on the internet.
-- Don't do either of these things!
+- You shouldn't be sharing files with strangers on the internet, kids.
+- Don't disappoint your Big Brother now :eyes:
 
 This is a dockerized qbittorrent-nox that is built against a patched version
 of libtorrent with the function body of [bt_peer_connection::write_piece](https://github.com/arvidn/libtorrent/blob/RC_2_0/src/bt_peer_connection.cpp#L2632)
@@ -19,9 +22,6 @@ well as some bookkeeping around stats and alerts.
 This way 0 bytes of file data are ever sent back to peer connections, handshakes
 and other protocol communications are unaffected and the client chugs along
 happily in this state.  
-
-Download your favourite Linux ISO's in peace knowing that the powers that be
-will never mistake you for one of those filthy pirates.  
 
 ## How to use
 
@@ -44,7 +44,7 @@ docker compose.
 version: "3"
 services:
   greedy-torrent:
-    image: 'bradyslot/greedy-torrent:latest'
+    image: ghcr.io/bradyslot/greedy-torrent:latest
     container_name: greedy-torrent
     volumes:
       - /example:/config
