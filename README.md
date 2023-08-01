@@ -28,6 +28,11 @@ for providing a god tier build script that builds a statically compiled version
 of qbittorrent-nox, works with most architectures and includes and out of the
 box way to apply patches.  
 
+## Uses
+
+*libtorrent:* v2.0.9
+*qBittorrent:* release-4.5.4
+
 ## How to use
 
 I'm going to assume you can BYO your own qBittorrent.conf as well as all the
