@@ -1,6 +1,7 @@
 # greedy-torrent
 
 [![CI](https://github.com/bradyslot/greedy-torrent/actions/workflows/ci.yml/badge.svg)](https://github.com/bradyslot/greedy-torrent/actions)
+[![GHCR](https://img.shields.io/badge/latest-blue?style=flat&logo=docker&logoColor=ffffff&label=greedy-torrent&labelColor=555555&color=0366d6)](https://ghcr.io/bradyslot/greedy-torrent)
 
 ## Take and don't give back
 
