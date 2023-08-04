@@ -2,7 +2,7 @@ FROM alpine:latest as builder
 
 ENV qbt_qbittorrent_tag=release-4.5.4
 ENV qbt_libtorrent_tag=v2.0.9
-ENV qbt_patches_url=bradyslot/greedy-torrent-patch
+ENV qbt_patches_url=bradyslot/greedy-torrent
 
 RUN apk update && apk add curl bash
 
