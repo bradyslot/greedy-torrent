@@ -30,29 +30,18 @@ box way to apply patches.
 
 ## Uses
 
-*libtorrent:* v2.0.9
-*qBittorrent:* release-4.5.4
+**libtorrent:** v2.0.9  
+**qBittorrent:** release-4.5.4  
 
 ## How to use
 
-I'm going to assume you can BYO your own qBittorrent.conf as well as all the
-other config and data files associated with running qBittorrent.  
+BYO qBittorrent.conf & data
+`~/.config/qBittorrent/` and `~/.local/share/qBittorrent/` live in the `/config`
+mount.  
+The `/downloads` mount is obvious.  
+Set the PUID and PGID to a user:group with read+write permissions on the volumes.  
 
-The /config volume mount is the users home directory that runs the service.  
-It's also the XDG_CONFIG_HOME and XDG_DATA_HOME.  
-The /downloads volume mount is obvious.  
-
-The PUID of the user running the service is 1000.  
-The PGID of the group the user is in is also 1000.  
-This matches the primary single user account of most linux desktops.  
-If you use a different uid and gid for the user account you run your docker
-containers with, and you want that to match the permissions of the mounted
-volumes, then you'll probably want to build your own.  
-
-Or, eventually I'll figure out how to do user mappings and permissions within
-docker compose like the way [linuxserver.io](https://docs.linuxserver.io/images/docker-qbittorrent)
-does it.  
-
+**example docker-compose.yml:**  
 ```yaml
 ---
 version: "3"
@@ -65,6 +54,9 @@ services:
     volumes:
       - /example:/config
       - /example:/downloads
+    environment:
+      - PGID=1000
+      - PUID=1000
     ports:
       - 8080:8080
       - 6881:6881
