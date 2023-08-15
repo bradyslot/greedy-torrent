@@ -9,4 +9,4 @@ grep -q "^abc:" /etc/passwd || adduser -u "$PUID" -G abc -h "$HOME" -s /bin/fals
 chown -R abc:abc /config
 chown -R abc:abc /downloads
 
-/usr/bin/qbittorrent-nox --webui-port=8080
+su -c '/usr/bin/qbittorrent-nox --webui-port=8080' abc
