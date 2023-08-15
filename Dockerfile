@@ -21,10 +21,11 @@ XDG_DATA_HOME=$HOME
 ENV PUID=1000
 ENV PGID=1000
 
-RUN apk update && apk add bash
+RUN apk update && apk add --no-cache bash su-exec
 
 COPY --from=builder /qbt-build/completed/qbittorrent-nox /usr/bin/
 COPY entrypoint.sh /usr/bin/entrypoint
+RUN chmod +x /usr/bin/entrypoint
 
 EXPOSE 8080 6881 6881/udp
 VOLUME /config
