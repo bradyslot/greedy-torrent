@@ -35,7 +35,7 @@ box way to apply patches.
 
 ## How to use
 
-BYO qBittorrent.conf & data
+BYO qBittorrent.conf & data.  
 `~/.config/qBittorrent/` and `~/.local/share/qBittorrent/` live in the `/config`
 mount.  
 The `/downloads` mount is obvious.  
